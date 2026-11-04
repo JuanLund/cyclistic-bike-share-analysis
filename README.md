@@ -1,76 +1,103 @@
-# 🚴‍♂️ Caso de Estudio Cyclistic Bike-Share
+# 🚴‍♂️ Cyclistic Bike-Share Case Study
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-2.0+-150458?logo=pandas&logoColor=white)
 ![Tableau](https://img.shields.io/badge/Tableau-Public-E97627?logo=tableau&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
 
-Estrategia de Conversión de Ciclistas Ocasionales a Miembros Anuales: Auditoría de 4,810,648 Viajes Certificados
+> **Conversion Strategy: From Casual Riders to Annual Members across 4,810,648 Certified Trips**  
+> **Author:** Juan E. Lund — Operations & Partner Manager | Data & Decision Scientist  
+> **Language:** **English** | [Versión en Español](README.es.md)
 
-## 1. Resumen Ejecutivo (Answer-First)
+---
 
-Para maximizar el crecimiento rentable de Cyclistic mediante la conversión de ciclistas ocasionales en miembros anuales, la empresa debe **pivotar su enfoque desde el marketing masivo de fin de semana hacia la captura quirúrgica de usuarios frecuentes de bicicletas eléctricas y commuters híbridos**.
+## 1. Executive Summary (Answer-First)
 
-Este análisis demuestra que el mayor potencial de conversión no reside en el turista de fin de semana, sino en el **millón de viajes casuales (63.03% del total) que ocurren de lunes a viernes**, fuertemente apalancados por una alta adopción de la flota eléctrica (hasta 71.20% los miércoles).
+To maximize Cyclistic's profitable growth by converting casual riders into annual members, the company must **pivot its marketing strategy away from broad weekend leisure promotions toward surgical, mid-week acquisition of hybrid commuters and frequent electric bike adopters**.
 
-## 2. El Problema (Ask)
+This analysis demonstrates that the greatest untapped conversion potential does not reside in the weekend tourist, but in the **1.06 million casual trips (63.03% of total casual volume) taking place Monday through Friday**, strongly driven by electric fleet adoption that peaks at **71.20% on Wednesdays**.
 
-El equipo directivo y financiero de Cyclistic determinó que las membresías anuales son sustancialmente más rentables que los pases de viaje único o de día completo. El objetivo comercial de este proyecto es analizar el comportamiento diferencial entre los miembros anuales y los usuarios ocasionales sobre los datos históricos de 12 meses, para diseñar estrategias de conversión y campañas de marketing digital basadas en evidencia.
+---
 
-## 3. Datos y Limpieza (Prepare & Process)
+## 2. Business Problem & Objective (Ask)
 
-El proyecto implicó la extracción, consolidación y limpieza de un gran volumen de datos transaccionales generados por una red de 5,824 bicicletas y 692 estaciones en Chicago.
+Cyclistic's executive leadership and finance teams determined that annual memberships generate significantly higher lifetime margins and recurring revenue than single-ride or full-day passes.
 
-* **Herramientas:** Python (Pandas, NumPy) para ingesta, cálculo de duraciones y limpieza; Tableau Public para la visualización ejecutiva.
-* **Volumen:** Se procesaron 6.17 millones de registros brutos de 12 meses en formato Parquet, aplicando reglas estrictas de depuración (eliminación de nulos críticos, viajes < 1 minuto por falsos desbloqueos y pruebas operativas de mantenimiento) para obtener un dataset final auditado de **4,810,648 viajes válidos**.
-* **Resolución de Restricciones (PII):** Debido a normativas de privacidad, no se contaba con información de identificación personal (PII) ni tarjetas de crédito para rastrear usuarios únicos. Este obstáculo se resolvió diseñando un modelo de proxies comportamentales (cruzando día de la semana, hora, duración, tipo de flota y estaciones residenciales vs. laborales) para aislar a los residentes locales de los turistas de paso.
+* **Business Objective:** Analyze 12 months of historical trip data to uncover behavioral differences between annual members and casual riders, and design targeted digital conversion campaigns without eroding operational unit economics.
+* **Privacy & Governance Constraint (No PII):** Under data privacy regulations, the dataset excludes personally identifiable information (PII) and credit card tokens. Recurrence and user intent were modeled using **spatiotemporal behavioral proxies** (combining day of week, hour of day, trip duration, fleet type, and residential vs. commercial station clusters).
 
-## 4. Análisis y Hallazgos Clave (Analyze)
+---
 
-El análisis cuantitativo sobre los casi 5 millones de registros reveló tres hallazgos contraintuitivos que rompen con los supuestos tradicionales del negocio:
+## 3. Data Ingestion & Cleaning Pipeline (Prepare & Process)
 
-* **El 63.03% de los viajes ocasionales ocurre de lunes a viernes:** De 1,682,831 viajes casuales, 1,060,724 suceden en días hábiles (con un piso constante de ~195,000 a 209,000 viajes diarios de lunes a jueves). Existe un "segmento oculto" de trabajadores híbridos y residentes locales que utilizan el servicio de manera constante entre semana.
-* **Pico de Adopción Eléctrica a Mitad de Semana (+10.0 pp):** La bicicleta eléctrica (`electric_bike`) es el verdadero motor de adquisición. Los usuarios ocasionales la eligen en el 67.4% de sus trayectos, alcanzando un récord de **71.20% de adopción los miércoles** (superando sistemáticamente a los miembros anuales con una brecha de hasta +10.04 puntos porcentuales).
-* **Asimetría en la Duración del Viaje (+79.8%):** Los usuarios ocasionales realizan viajes significativamente más largos (23.2 minutos en promedio frente a los 12.9 minutos de los miembros). Al combinar trayectos más extensos con el uso intensivo de flota eléctrica, el ciclista casual recurrente sufre una alta fricción económica por cargos por minuto y tarifas de desbloqueo.
+The pipeline processed transactional data across a fleet of 5,824 bicycles and 692 stations in Chicago.
 
-## 5. Visualización (Share)
+* **Stack:** Python (Pandas, NumPy) for ETL, schema standardization, and duration modeling; Tableau Public for executive visualization.
+* **Audit Funnel:**
+  * Raw consolidated records (12 monthly files): **6,171,785 rows**.
+  * Depuration rules: Removed false unlock trips (< 60 seconds), maintenance depot test runs (`HQ QR`), and null station identifiers.
+  * Operational noise discarded: **1,361,137 rows (22.05%)**.
+  * Certified population: **4,810,648 valid trips** (3,127,817 annual members [65.02%] and 1,682,831 casual riders [34.98%]).
 
-Los hallazgos han sido consolidados en un panel ejecutivo interactivo de tres vistas, diseñado para facilitar la toma de decisiones del Comité Directivo:
+---
 
-![Vista Previa del Dashboard](./assets/tableau_dashboard.png)
+## 4. Key Quantitative Findings (Analyze)
 
-* **Panel Superior (Tendencia Semanal de Volumen):** Gráfico comparativo de líneas (`member` vs. `casual`) evidenciando el piso laboral casual y el pico de miembros los martes (510,456 viajes).
-* **Panel Inferior Izquierdo (Curva de Penetración de Flota Eléctrica):** Visualización de la brecha de uso eléctrico de lunes a domingo con pico de miércoles.
-* **Panel Inferior Derecho (Duración Media del Viaje):** Contraste de 23.2 min vs. 12.9 min con línea de referencia tarifaria en el minuto 15.
+The quantitative audit revealed three counterintuitive findings that redefine commercial strategy:
 
-## 6. Recomendaciones Estratégicas (Act)
+1. **63.03% of Casual Trips Occur on Weekdays ($1,060,724$ of $1,682,831$):**
+   * Although Saturday has the single highest daily volume (353,661 trips), nearly two-thirds of annual casual volume happens Monday through Friday, maintaining a consistent baseline of ~195,000 to 209,000 trips daily. This segment represents hybrid workers and local residents with high conversion propensity.
+2. **Electric Bike Adoption Peaks Mid-Week (+10.0 pp Gap):**
+   * Electric bikes (`electric_bike`) are the primary vehicle for casual acquisition. Casual riders select e-bikes in **67.4% of their annual trips**, reaching record peaks of **71.20% on Wednesdays**, systematically outpacing annual members (60.5% average; up to a +10.04 percentage point penetration gap).
+3. **Trip Duration Asymmetry (+79.8% Longer):**
+   * Casual trips average **23.2 minutes**, compared to **12.9 minutes** for members. Combining longer rides with per-minute electric fees subjects frequent casual riders to high pricing friction at checkout.
 
-Para convertir la fricción tarifaria del usuario casual en suscripciones anuales completas (protegiendo el margen unitario de las E-Bikes y la disponibilidad de flota), se proponen tres iniciativas respaldadas por un protocolo de pruebas A/B de 8 semanas:
+---
 
-* **In-App Instant Ride-Credit Rollover:** Al finalizar un viaje casual >20 min o en bicicleta eléctrica, bonificar el 100% del costo recién pagado como descuento directo hacia la Membresía Anual mediante un pop-up temporizado en la aplicación móvil, capitalizando el momento de dolor de pago.
-* **E-Bike Commuter Pass ($0 Unlock Fee) con Rebalanceo Gamificado:** Campaña geocercada ofreciendo desbloqueo bonificado de bicicletas eléctricas para miembros anuales, acompañada de incentivos de minutos gratis cuando el usuario estaciona en estaciones deficitarias ("Estaciones Verdes") antes de las 8:30 AM para reducir costos logísticos de camiones.
-* **Programa Weekend-to-Weekday Bridge en Estaciones Residenciales:** Secuencia automatizada dominical para usuarios casuales del fin de semana, ofreciendo desbloqueos eléctricos bonificados de lunes a jueves durante 14 días al suscribirse, incluyendo reserva prioritaria para el 8% de usuarios de flota asistida/inclusiva.
+## 5. Executive Visualization (Share)
 
-## 7. Entregables y Estructura del Repositorio
+Findings were consolidated into an interactive three-view executive dashboard:
 
-El repositorio se encuentra estructurado en carpetas modulares para facilitar su navegación y reproducibilidad:
+![Dashboard Preview](./assets/tableau_dashboard.png)
+
+* **Top View (Weekly Volume Trends):** Visualizes the casual weekday commuter baseline vs. Tuesday member peak (510,456 rides).
+* **Bottom Left (E-Bike Penetration Curve):** Highlights the adoption gap Monday through Sunday peaking at mid-week.
+* **Bottom Right (Average Duration Asymmetry):** Highlights 23.2 min vs. 12.9 min relative to the 15-minute pricing threshold.
+
+---
+
+## 6. Strategic Recommendations & A/B Experimentation (Act)
+
+* **In-App Instant Ride-Credit Rollover:** At the conclusion of a casual trip >20 min or on an electric bike, credit 100% of the newly incurred ride fee directly toward an Annual Membership via a timed pop-up, capitalizing on the exact moment of payment friction.
+* **E-Bike Commuter Pass ($0 Unlock Fee) with Gamified Rebalancing:** Geofenced campaign offering waived unlock fees for annual members, paired with free-minute incentives when docking at deficit stations ("Green Docks") before 8:30 AM to cut truck rebalancing costs.
+* **Weekend-to-Weekday Bridge Program:** Automated Sunday sequence targeting weekend leisure casuals, offering subsidized electric unlocks Monday through Thursday for 14 days upon subscription.
+
+---
+
+## 7. Repository Structure
 
 ```text
+cyclistic-bike-share-analysis/
 ├── deliverables/
-│   ├── Cyclistic_Presentacion_Ejecutiva_Final.pptx   # Deck ejecutivo de 12 slides para Directores
-│   └── Cyclistic_Caso_Estudio_Completo.md            # Documentación exhaustiva con tablas maestras
+│   ├── Cyclistic_Presentacion_Ejecutiva_Final.pptx   # 12-slide executive deck with speaker notes
+│   ├── Cyclistic_Caso_Estudio_Completo.md            # Comprehensive case documentation
+│   └── Cyclistic_Log_Auditoria_Metodologica.md       # Methodological changelog
 ├── notebooks/
-│   └── Cyclistic_Data_Pipeline.ipynb                 # Notebook de Jupyter con todo el flujo analítico
+│   └── Cyclistic_Data_Pipeline.ipynb                 # End-to-end analytical Jupyter Notebook
 ├── src/
-│   └── cyclistic_pipeline.py                         # Script modular en Python para ETL y limpieza
+│   └── cyclistic_pipeline.py                         # Modular Python ETL and cleaning script
 ├── data/
-│   ├── 01_metricas_semanales_ebikes.csv              # Agregado certificado por día, usuario y e-bike
-│   └── 02_patrones_horarios_demanda.csv              # Agregado de distribución horaria de viajes
+│   ├── 01_metricas_semanales_ebikes.csv              # Aggregated metrics by day and fleet
+│   └── 02_patrones_horarios_demanda.csv              # Hourly demand distribution
 ├── assets/
-│   └── tableau_dashboard.png                         # Captura del dashboard interactivo
-├── .gitignore
-└── README.md
+│   └── tableau_dashboard.png                         # Interactive dashboard preview
+├── README.es.md                                      # Spanish version of documentation
+├── requirements.txt
+└── README.md                                         # Primary English documentation
 ```
 
-* **Presentación Ejecutiva:** [Ver Presentación Ejecutiva en `/deliverables`](./deliverables/Cyclistic_Presentacion_Ejecutiva_Final.pptx)
-* **Pipeline en Python:** [Script de Procesamiento en `/src`](./src/cyclistic_pipeline.py)
-* **Datos Procesados:** [Extractos Analíticos en `/data`](./data/)
+---
+
+### Links & Deliverables
+* 📊 **Executive Presentation:** [Download Deck in `/deliverables`](./deliverables/Cyclistic_Presentacion_Ejecutiva_Final.pptx)
+* 💻 **Python Pipeline:** [Modular Script in `/src`](./src/cyclistic_pipeline.py)
+* 📈 **Tableau Dashboard:** [View on Tableau Public](https://public.tableau.com/app/profile/juan.lund)
