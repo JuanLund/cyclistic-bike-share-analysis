@@ -1,0 +1,15 @@
+dia_codigo,dia_semana,tipo_usuario,total_viajes,viajes_ebike,pct_adopcion_ebike,duracion_promedio_min
+1,1. Domingo,casual,33591,23811,70.89,24.67
+1,1. Domingo,member,41031,27509,67.04,13.58
+2,2. Lunes,casual,24499,18039,73.63,21.41
+2,2. Lunes,member,54630,36668,67.12,12.21
+3,3. Martes,casual,24144,18397,76.2,18.01
+3,3. Martes,member,63062,42680,67.68,11.98
+4,4. Miércoles,casual,24301,18722,77.04,17.29
+4,4. Miércoles,member,63326,43410,68.55,11.98
+5,5. Jueves,casual,26063,19881,76.28,18.72
+5,5. Jueves,member,61845,42609,68.9,12.14
+6,6. Viernes,casual,33222,24933,75.05,20.68
+6,6. Viernes,member,57124,39492,69.13,12.79
+7,7. Sábado,casual,44768,31963,71.4,24.2
+7,7. Sábado,member,49650,34099,68.68,14.03

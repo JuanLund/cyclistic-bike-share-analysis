@@ -1,0 +1,26 @@
+# =============================================================================
+# .gitignore - Cyclistic Bike-Share Portfolio Project
+# =============================================================================
+
+# Archivos temporales de Office / Sistema
+~$*
+*.tmp
+*.bak
+*_backup.*
+Cyclistic_Presentacion_Ejecutiva_Final.pptx
+.DS_Store
+Thumbs.db
+
+# Datasets pesados (>100 MB de datos brutos y archivos CSV/Parquet completos)
+*.parquet
+cyclistic_12_meses.parquet
+cyclistic_completo_tableau.csv
+cyclistic_limpio_para_tableau.csv
+*.zip
+
+# Entornos virtuales y caché de Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
